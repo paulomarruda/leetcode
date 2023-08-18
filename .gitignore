@@ -1,6 +1,2 @@
-*/bin/* 
-!*.c
-!*.h
-!*.md
-!*.cpp
-!*.hpp
+*/exercices/bin/
+
