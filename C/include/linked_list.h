@@ -6,8 +6,10 @@
 
 typedef struct Node{
     int data;
+    int num_nexts;
     struct Node* next;
 } Node;
+
 
 Node* constructLinkedList(const int data);
 
@@ -15,7 +17,11 @@ void destructLinkedList(Node** phead);
 
 void printLinkedList(Node* head);
 
-bool insertLinkedList(Node** head, const int data);
+bool prependLinkedList(Node** phead, const int data);
+
+Node* inverseLinkedList(Node* head);
+
+int lengthLinkedList(Node* head);
 
 Node* findNsliceLinkedList(Node* head, const int target);
 

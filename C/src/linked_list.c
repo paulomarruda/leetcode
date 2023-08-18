@@ -3,13 +3,14 @@
 #include "../include/linked_list.h"
 #include <stdio.h>
 
-#define MAX_PRINT 100
+#define MAX_PRINT 50
 
 Node* constructLinkedList(const int data){
     Node* head = malloc(sizeof(Node));
     if (head == NULL){ return NULL; }
     
     head->data = data;
+    head->num_nexts = 0;
     head->next = NULL;
     return head;
 }
@@ -28,7 +29,7 @@ void destructLinkedList(Node** phead){
 void printLinkedList(Node* head){
     int i = 0;
     printf("<");
-    while (head != NULL && i < 100){
+    while (head != NULL && i < MAX_PRINT){
         printf("%d,", head->data);
         head = head->next;
         i++;
@@ -39,19 +40,38 @@ void printLinkedList(Node* head){
     printf(">\n");
 }
 
-bool insertLinkedList(Node** phead, const int data){
+bool prependLinkedList(Node** phead, const int data){
     Node* new_node = constructLinkedList(data);
     if (new_node == NULL){ return false; }
     if (*phead == NULL){ 
-        *phead = new_node; 
+        *phead = new_node;
         return true;
     }
-    Node* current = *phead;
-    while (current->next != NULL){
-        current = current->next;
-    }
-    current->next = new_node;
+    Node* head = *phead;
+    new_node->next = head;
+    new_node->num_nexts = head->num_nexts + 1;
+    *phead = new_node;
     return true;
+};
+
+Node* inverseLinkedList(Node* head){
+    if (head == NULL){ return NULL; }
+    Node* begin = head;
+    Node* middle = NULL;
+    Node* end = NULL;
+    while(begin->next != NULL){
+        middle = begin->next;
+        end = middle->next;
+        begin->next = end;
+        middle->next = head;
+        head = middle;
+    }
+    return head;
+}
+
+int lengthLinkedList(Node* head){
+    if (head == NULL){ return 0; }
+    else {return head->num_nexts + 1;}
 }
 
 Node* findNsliceLinkedList(Node* head, const int target){

@@ -27,50 +27,9 @@
  */
 
 Node* middleNode(Node* head){
-    if (head == NULL){
-        return NULL;
-    }
-    //using head as the slow pointer
-    Node* fast = head;
-    Node* middle = NULL;
-    while (fast != NULL){
-        //number of "nexts" reaches the end
-        //in a odd number of cases, i.e. the 
-        // size of the list is odd
-        if (fast->next == NULL){
-            insertLinkedList(&middle, head->data);
-            return middle;
-        } else if ((fast->next)->next == NULL){
-            // even case
-            insertLinkedList(&middle, head->data);
-            head = head->next;
-            break;
-        } else{
-            fast = (fast->next)->next;
-        }
-        head = head->next;
-    }
-    insertLinkedList(&middle, head->data);
-    return middle;
 }
 
 int main(){
-    Node* head = NULL;
-    // Size ODD
-    for (int i=0; i<1000; i++){
-        insertLinkedList(&head, i);
-    }
-    printLinkedList(head);
-    Node* middle = middleNode(head);
-    printLinkedList(middle);
-    middle = NULL;
-    head = NULL;
-    // size even
-    for (int i=0; i<1001; i++){
-        insertLinkedList(&head, i);
-    }
-    printLinkedList(head);
-    middle = middleNode(head);
-    printLinkedList(middle);
+
     return 0;
 }
