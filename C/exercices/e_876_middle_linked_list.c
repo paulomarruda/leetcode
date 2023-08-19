@@ -26,10 +26,26 @@
  *  space:
  */
 
-Node* middleNode(Node* head){
-}
 
 int main(){
+    Node* head;
+    for (int i=0; i<20; i++){
+        prependLinkedList(&head, i);
+    }
+    printLinkedList(head);
+
+    Node* begin = head;
+    Node* middle = begin->next;
+    Node* end = middle->next;
+    Node* fast = middle->next;
+
+    printf("B: %d M: %d E: %d F: %d\n", begin->data, middle->data, end->data, fast->data);
+
+    begin = begin->next;
+    middle = middle->next;
+    end = end->next;
+    fast = (fast->next)->next;
+    printf("B: %d M: %d E: %d F: %d\n", begin->data, middle->data, end->data, fast->data);
 
     return 0;
 }

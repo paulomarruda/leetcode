@@ -74,16 +74,11 @@ int lengthLinkedList(Node* head){
     else {return head->num_nexts + 1;}
 }
 
-Node* findNsliceLinkedList(Node* head, const int target){
-    while (head != NULL){
-        if (head->data == target)
-            { return head; }
-        head = head->next;
-    }
-    return NULL;
-}
+bool findLinkedList(Node* phead, const int data);
 
-bool removeLinkedList(Node** phead, const int target);
+Node* removeLinkedList(Node* head, const int target);
+
+Node* removeAllLinkedList(Node* head, const int data);
 
 void appendLinkedList(Node** phead, Node *other){
     if (*phead == NULL){
@@ -95,4 +90,12 @@ void appendLinkedList(Node** phead, Node *other){
         current = current->next;
     }
     current->next = other;
+}
+
+Node* linkedListFromArray(int arr[], int size){
+    Node* head = NULL;
+    for (int i=0; i<size; i++){
+        prependLinkedList(&head, arr[size-1-i]);
+    }
+    return head;
 }
