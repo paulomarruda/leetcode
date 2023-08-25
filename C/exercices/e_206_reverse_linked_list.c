@@ -1,5 +1,7 @@
 #include <stdlib.h>
-#include "../include/linked_list.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include "../include/linear.h"
 /*
  * Problem
  * --------
@@ -17,10 +19,16 @@
 
 int main() {
     Node* head = NULL;
-    for (int i = 0; i < 1500; i++) {
-        prependLinkedList(&head, i);
+    int arr[20];
+    for (int i=0; i<20; i++){
+        arr[i] = i;
+        prependLinkedList(&head, &arr[i]);
     }
+    printf("Before:\n");
+    printLinkedList(head, printInt);
     head = inverseLinkedList(head);
-    printLinkedList(head);
+    printf("After inversion: \n");
+    printLinkedList(head, printInt);
+    destructLinkedList(&head);
     return 0;
 }
