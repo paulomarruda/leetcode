@@ -4,14 +4,15 @@
 #include <math.h>
 #include "../include/linear.h"
 
+
 #define MAX_PRINT 50
 #define EPS 1.0E-34;
 
-Node *constructHead(void *data){
+static Node *constructLinkedListNode(void *data){
     if (!data){ return NULL; }
     Node* new_head = malloc(sizeof(Node));
     // if allocation failed:
-    if (new_head == NULL){ return NULL;}
+    if (!new_head){ return NULL; }
     new_head->data = data;
     new_head->next = NULL;
     return new_head;
@@ -29,9 +30,8 @@ void destructLinkedList(Node **phead){
 }
 
 bool prependLinkedList(Node **phead, void *data){
-    Node *new_head = malloc(sizeof(Node));
+    Node *new_head = constructLinkedListNode(data);
     if (!new_head){ return false; }
-    new_head->data = data;
     new_head->next = *phead;
     *phead = new_head;
     return true;
@@ -54,13 +54,21 @@ Node *inverseLinkedList(Node *head){
 
 int lengthLinkedList(Node *head){
     int l = 0;
-    while(!head){ head = head->next; }
+    while(!head){ 
+        head = head->next; 
+        l++;
+    }
     return l;
 }
 
 void printInt(void *data){
-    int *value = (int *) data;
-    printf("%d", *value);
+    int _data = *((int *) data);
+    printf("%d", _data);
+}
+
+void printFloat(void *data){
+    float _data = *((float *) data);
+    printf("%f", _data);
 }
 
 void printLinkedList(Node *head, PrintingFunc printT){
@@ -77,36 +85,45 @@ void printLinkedList(Node *head, PrintingFunc printT){
 }
 
 
-bool areEqualInt(void *x, void *y){
-    int _x = *(int *) x;
-    int _y = *(int *) y;
-    return _x == _y;
-}
-
-bool areEqualFloat(void *x, void *y){
-    float _x = *(float *) x;
-    float _y = *(float *) y;
-    return fabs(_x - _y) < EPS;
-}
-
-bool lessThanInt(void *x, void *y){
-    return (*(int *) x) < (*(int *) y); 
-}
-/*
-Node* removeAlllinkedList(Node* head, void *data, ArithComparisonFun compFun){
-    if (!head){ return head; }
-    Node *current = head;
-    Node *next = current->next;
-    Node* previous = NULL;
-    void *elem;
-    
-}
-*/
-
-
 /*
  ******************
- * DYNAMICAL ARRAYS
+ *      Stacks 
  ******************
 */
+
+Stack *constructstack(const size_t capacity, void *data){
+    Stack *new_stack = malloc(sizeof(Stack));
+    if (!new_stack){ return NULL; }
+    new_stack->capacity = capacity;
+    new_stack->size = 0;
+    if (data){
+        new_stack->top = constructLinkedListNode(data);
+    } else { new_stack->top = (Node *) NULL; }
+    return new_stack;
+}
+
+void destructStack(Stack *stack){
+    destructLinkedList( &( stack->top ) );
+    free(stack);
+}
+
+size_t lengthStack(Stack *stack){
+    return stack->size;
+}
+
+bool insertStack(Stack *stack, void *data){
+    if (stack->capacity == stack->size) { return false; }
+    bool op = prependLinkedList(&stack->top, data);
+    return op;
+}
+
+bool popStack(Stack *stack, void *data){
+    if (stack->top == 0){ return false; }
+    Node *pop = stack->top;
+    stack->top = (stack->top)->next;
+    data = pop->data;
+    free(pop);
+    return true;
+}
+
 

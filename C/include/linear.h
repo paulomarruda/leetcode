@@ -1,7 +1,9 @@
 #pragma once
+
 #ifndef LINEAR_H
 #define LINEAR_H
-
+#include <stdlib.h>
+#include "comparison_functions.h"
 /*
  **************
  * LINKED LISTS 
@@ -26,18 +28,10 @@ typedef struct Node{
 } Node;
 
 /*
- * Constructor for a linked list.
- *
- * @param data provide the data stored at the head
- * of the new list list.
- * @return A new list (NULL if none data is passed).
-*/
-Node *constructHead(void *data);
-
-/*
  * Destructor function for the linked list.
  * @param phead pointer pointing to the head.
 */
+
 void destructLinkedList(Node **phead);
 
 /*
@@ -49,20 +43,14 @@ void destructLinkedList(Node **phead);
 */
 bool prependLinkedList(Node **phead, void *data);
 
+bool prependOrderedLinkedList(Node **phead, void *data, ArithmeticComparisonFun compFun);
+
 Node *inverseLinkedList(Node* head);
 
 int lengthLinkedList(Node *head);
 
-
-typedef bool (*ArithComparisonFun)(void *x, void *y);
-
-bool areEqualInt(void *x, void *y);
-
-bool areEqualFloat(void *x, void *y);
-
 bool inserOrderedLinkedList(Node **phead, void *data);
 
-bool insertAfterLinkedList(Node **peahd, void *x, void *data, ArithComparisonFun areEqualFun);
 
 /*
  * Remove all elements of matching a given other element under a 
@@ -76,7 +64,6 @@ bool insertAfterLinkedList(Node **peahd, void *x, void *data, ArithComparisonFun
  * @param compFun a matching comparison function
  * @see areEqualInt, areEqualFloat, lessThanInt, lessThanFloat
  */
-Node* removeAllLinkedList(Node* head, void *data, ArithComparisonFun compFun);
 /*
  * For vizualization porpuses, a printer type 
  * is provided.
@@ -110,32 +97,28 @@ void printChar(void *data);
  * @see printInt, printFloat, printChar
 */
 void printLinkedList(Node *head, PrintingFunc printT);
+
+
 /*
  *********
  *  STACKS
  *********
 */
 
-/*
- ******************
- * DYNAMICAL ARRAYS
- ******************
-*/
+typedef struct Stack{
+    size_t capacity;
+    size_t size;
+    Node *top;
+} Stack;
 
-typedef struct DynamicArray{
-    int size;
-    int capacity;
-    void *arr;
-} DynamicArray;
+Stack *constructStack(const size_t capacity);
 
-DynamicArray *createDynamicArray(int init_size);
+void destructStack(Stack *pstack);
 
-bool insertAtDynamicArray(DynamicArray **da);
+size_t lengthStack(Stack *stack);
 
-/************
- *  SETS
- ************
+bool insertStack(Stack *stack, void *data);
 
-*/
+bool popStack(Stack *stack, void *container); 
 
 #endif

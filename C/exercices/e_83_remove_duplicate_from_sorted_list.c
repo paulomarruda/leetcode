@@ -9,12 +9,9 @@
 #include <stdbool.h>
 #include "../include/linear.h"
 
-
-Node* removeDuplicates(Node* list){
+Node* removeDuplicates(Node* list, bool inplace){
     Node* current = list;
-    if (!current){
-        return current;
-    }
+    if (!current){ return current; }
     Node *next;
     void *elem;
     while(current){
@@ -23,9 +20,8 @@ Node* removeDuplicates(Node* list){
         if (next){
             if ( areEqualInt(elem, next->data) ){
                 current->next = next->next;
-            } else {
-                current = next;
-            }
+                if (inplace) { free(next); }
+            } else { current = next; }
         } else { break; }
     }
     return list;
@@ -44,8 +40,8 @@ int main(){
     printf("Before: \n");
     printLinkedList(head, printInt);
     printf("After: \n");
-    head = removeDuplicates(head);
+    head = removeDuplicates(head, true);
     printLinkedList(head, printInt);
-
+    destructLinkedList(&head);
     return 0;
 }
