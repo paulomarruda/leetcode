@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include <math.h>
 #include "../include/linear.h"
 
@@ -91,14 +92,11 @@ void printLinkedList(Node *head, PrintingFunc printT){
  ******************
 */
 
-Stack *constructstack(const size_t capacity, void *data){
+Stack *constructStack(){
     Stack *new_stack = malloc(sizeof(Stack));
-    if (!new_stack){ return NULL; }
-    new_stack->capacity = capacity;
+    if (!new_stack){ return NULL;}
     new_stack->size = 0;
-    if (data){
-        new_stack->top = constructLinkedListNode(data);
-    } else { new_stack->top = (Node *) NULL; }
+    new_stack->top = NULL;
     return new_stack;
 }
 
@@ -112,18 +110,30 @@ size_t lengthStack(Stack *stack){
 }
 
 bool insertStack(Stack *stack, void *data){
-    if (stack->capacity == stack->size) { return false; }
-    bool op = prependLinkedList(&stack->top, data);
-    return op;
-}
-
-bool popStack(Stack *stack, void *data){
-    if (stack->top == 0){ return false; }
-    Node *pop = stack->top;
-    stack->top = (stack->top)->next;
-    data = pop->data;
-    free(pop);
+    Node *new_top = constructLinkedListNode(data);
+    if (!new_top){ return false; }
+    new_top->next = stack->top;
+    stack->top = new_top;
+    stack->size++;
     return true;
 }
 
+void *peekStack(Stack *stack){
+    if (!stack->top){ return (void *) NULL; }
+    void *data = (void *) malloc(sizeof(void *));
+    if (!data){
+        return NULL;
+    }
+    memcpy(data, stack->top->data, sizeof(void *));
+    return data;
+}
 
+void *popStack(Stack *stack){
+    if (!stack->top){ return (void *) NULL; }
+    Node *top = stack->top;
+    stack->top = top->next;
+    stack->size--;
+    void *data = top->data;
+    free(top);
+    return data;
+}

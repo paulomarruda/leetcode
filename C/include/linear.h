@@ -106,19 +106,20 @@ void printLinkedList(Node *head, PrintingFunc printT);
 */
 
 typedef struct Stack{
-    size_t capacity;
     size_t size;
     Node *top;
 } Stack;
 
-Stack *constructStack(const size_t capacity);
+Stack *constructStack();
 
-void destructStack(Stack *pstack);
+void destructStack(Stack *stack);
 
 size_t lengthStack(Stack *stack);
 
 bool insertStack(Stack *stack, void *data);
 
-bool popStack(Stack *stack, void *container); 
+void *peekStack(Stack *stack);
+
+void *popStack(Stack *stack); 
 
 #endif

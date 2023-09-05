@@ -5,7 +5,7 @@
 
 #ifndef COMPARISON_FUNCTIONS_H
 #define COMPARISON_FUNCTIONS_H 
-
+#include <stdbool.h> 
 typedef bool (*ArithmeticComparisonFun)(void *x, void *y);
 
 bool areEqualInt(void *x, void *y);
